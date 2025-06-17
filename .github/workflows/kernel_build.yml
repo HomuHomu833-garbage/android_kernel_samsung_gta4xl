@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: panchajanya1999/archlinux:latest
+    strategy:
+      matrix:
+        device: [a51, f41, gta4xl, gta4xlwifi, m21, m31, m31s]
     steps:
       - name: Setup env
         run: pacman -Sy --noconfirm && pacman -S archlinux-keyring --noconfirm && pacman -Syu --needed --noconfirm aarch64-linux-gnu-binutils wget base-devel xmlto libxml2 libxml2-legacy inetutils bc cpio python-sphinx python-sphinx_rtd_theme graphviz imagemagick git python zip github-cli fortune-mod ccache jre8-openjdk
@@ -22,9 +25,9 @@ jobs:
         with:
           max-size: 2048M
       - name: Build Kernel
-        run: bash ci_build.sh f41
+        run: bash ci_build.sh ${{ matrix.device }}
       - name: Upload kernel package to artifacts
         uses: actions/upload-artifact@v4
         with:
-         name: Flashable zip
+         name: Kernel-${{ matrix.device }}
          path: AnyKernel3/package.zip
