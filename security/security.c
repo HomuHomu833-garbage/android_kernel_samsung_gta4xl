@@ -1157,9 +1157,6 @@ int security_task_getioprio(struct task_struct *p)
 int security_task_prlimit(const struct cred *cred, const struct cred *tcred,
 			  unsigned int flags)
 {
-#ifdef CONFIG_KSU
-	ksu_handle_prctl(option, arg2, arg3, arg4, arg5);
-#endif
 	return call_int_hook(task_prlimit, 0, cred, tcred, flags);
 }
 
@@ -1193,6 +1190,9 @@ int security_task_kill(struct task_struct *p, struct siginfo *info,
 int security_task_prctl(int option, unsigned long arg2, unsigned long arg3,
 			 unsigned long arg4, unsigned long arg5)
 {
+#ifdef CONFIG_KSU
+	ksu_handle_prctl(option, arg2, arg3, arg4, arg5);
+#endif
 	int thisrc;
 	int rc = -ENOSYS;
 	struct security_hook_list *hp;
