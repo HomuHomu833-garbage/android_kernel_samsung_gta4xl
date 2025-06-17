@@ -21,7 +21,7 @@ jobs:
       - name: Checkout submodules
         run: git submodule update --init --recursive --remote
       - name: Build Kernel
-        run: bash ci_build.sh ${{ matrix.device }}
+        run: bash ci_build.sh ${{ matrix.device }} ksu.config
       - name: Upload kernel package to artifacts
         uses: actions/upload-artifact@v4
         with:
