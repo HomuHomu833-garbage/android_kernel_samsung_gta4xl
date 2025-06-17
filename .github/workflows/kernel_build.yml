@@ -6,7 +6,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     container:
       image: panchajanya1999/archlinux:latest
@@ -23,7 +22,7 @@ jobs:
         with:
           max-size: 2048M
       - name: Build Kernel
-        run: bash ci_build.sh a51
+        run: bash ci_build.sh f41
       - name: Upload kernel package to artifacts
         uses: actions/upload-artifact@v4
         with:
