@@ -34,14 +34,13 @@ export CROSS_COMPILE=aarch64-linux-gnu-
 # export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 # export CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
 export LD_LIBRARY_PATH=$TC_DIR/lib
-export KBUILD_BUILD_USER="David112x"
+export KBUILD_BUILD_USER="HomuHomu833"
 export KBUILD_BUILD_HOST="github.com"
 export USE_HOST_LEX=yes
 export KERNEL_IMG=out/arch/arm64/boot/Image
 export DEFCONFIG=exynos9611-$1_defconfig
 export ANYKERNEL_DIR=$(pwd)/AnyKernel3/
 export BUILD_ID=$((GITHUB_RUN_NUMBER + 199))
-export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
 export SYSMEM="$(($(vmstat -s | grep -i 'total memory' | sed 's/ *//' | sed 's/total//g;s/memory//g;s/K//g;s/  / /g') / 1000))"
 export GITBRNCH="$(git rev-parse --abbrev-ref HEAD)"
 if [ "$(cat /sys/devices/system/cpu/smt/active)" = "1" ]; then
@@ -59,7 +58,7 @@ echo The system has $SYSMEM MB of total memory.
 echo Using $THREADS jobs for this build...
 echo Building branch: $GITBRNCH
 # make -j$THREADS LD=ld.lld O=out/
-make -j$THREADS CC='ccache clang -Qunused-arguments -fcolor-diagnostics' LLVM=1 LD=ld.lld LLVM_IAS=1 AS=llvm-as AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip O=out/
+make -j$THREADS CC='clang -Qunused-arguments -fcolor-diagnostics' LLVM=1 LD=ld.lld LLVM_IAS=1 AS=llvm-as AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip O=out/
 
 # Check if Image exists. If not, stop executing.
 if ! [ -a $KERNEL_IMG ]; then
