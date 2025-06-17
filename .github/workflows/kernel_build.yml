@@ -22,7 +22,7 @@ jobs:
         uses: hendrikmuhs/ccache-action@v1.2
         with:
           max-size: 2048M
-      - name: Build Sunscape Kernel
+      - name: Build Kernel
         run: bash ci_build.sh a51
       - name: Upload kernel package to artifacts
         uses: actions/upload-artifact@v4
