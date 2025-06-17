@@ -38,8 +38,6 @@ export KBUILD_BUILD_USER="David112x"
 export KBUILD_BUILD_HOST="github.com"
 export USE_HOST_LEX=yes
 export KERNEL_IMG=out/arch/arm64/boot/Image
-export KERNEL_DTBO=out/arch/arm64/boot/dtbo.img
-export KERNEL_DTB=out/arch/arm64/boot/dts/qcom/sdmmagpie.dtb
 export DEFCONFIG=exynos9611-$1_defconfig
 export ANYKERNEL_DIR=$(pwd)/AnyKernel3/
 export BUILD_ID=$((GITHUB_RUN_NUMBER + 199))
@@ -47,10 +45,10 @@ export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
 export SYSMEM="$(($(vmstat -s | grep -i 'total memory' | sed 's/ *//' | sed 's/total//g;s/memory//g;s/K//g;s/  / /g') / 1000))"
 export GITBRNCH="$(git rev-parse --abbrev-ref HEAD)"
 if [ "$(cat /sys/devices/system/cpu/smt/active)" = "1" ]; then
-		export THREADS=$(($(nproc --all) * 2))
-	else
-		export THREADS=$(nproc --all)
-	fi
+	export THREADS=$(($(nproc --all) * 2))
+else
+	export THREADS=$(nproc --all)
+fi
 
 # Make defconfig
 # make $DEFCONFIG LD=aarch64-elf-ld.lld O=out/
@@ -64,16 +62,13 @@ echo Building branch: $GITBRNCH
 make -j$THREADS CC='ccache clang -Qunused-arguments -fcolor-diagnostics' LLVM=1 LD=ld.lld LLVM_IAS=1 AS=llvm-as AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip O=out/
 
 # Check if Image exists. If not, stop executing.
-if ! [ -a $KERNEL_IMG ];
-  then
-    echo "An error has occured during compilation. Please check your code."
-    exit 1
-  fi
+if ! [ -a $KERNEL_IMG ]; then
+	echo "An error has occured during compilation. Please check your code."
+	exit 1
+fi
 
 # Make Flashable Zip
 cp "$KERNEL_IMG" "$ANYKERNEL_DIR"
-cp "$KERNEL_DTB" "$ANYKERNEL_DIR"/dtb 
-cp "$KERNEL_DTBO" "$ANYKERNEL_DIR" 
 cd AnyKernel3
 curl -sLo zipsigner.jar https://github.com/sunscape-stuff/AnyKernel3/raw/refs/heads/surya/zipsigner.jar
 zip -r9 UPDATE-AnyKernel3.zip * -x README.md LICENSE UPDATE-AnyKernel3.zip zipsigner.jar
