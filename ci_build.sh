@@ -15,7 +15,7 @@ tar -xf Neutron.tar.zst -C Neutron/ || exit 1
 # Clone dependant repositories
 # git clone --depth 1 -b gcc-master https://github.com/mvaisakh/gcc-arm64.git gcc-arm64
 # git clone --depth 1 -b gcc-master https://github.com/mvaisakh/gcc-arm.git gcc-arm
-git clone --depth 1 https://github.com/HomuHomu833/AnyKernel3-Universal9611 || exit 1
+git clone --depth 1 https://github.com/HomuHomu833/AnyKernel3-Universal9611 AnyKernel3 || exit 1
 
 # Workaround for safe.directory permission fix
 git config --global safe.directory "$GITHUB_WORKSPACE"
