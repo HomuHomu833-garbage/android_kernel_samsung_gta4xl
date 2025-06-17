@@ -14,16 +14,12 @@ jobs:
         device: [a51, f41, gta4xl, gta4xlwifi, m21, m31, m31s]
     steps:
       - name: Setup env
-        run: pacman -Sy --noconfirm && pacman -S archlinux-keyring --noconfirm && pacman -Syu --needed --noconfirm aarch64-linux-gnu-binutils wget base-devel xmlto libxml2 libxml2-legacy inetutils bc cpio python-sphinx python-sphinx_rtd_theme graphviz imagemagick git python zip github-cli fortune-mod ccache jre8-openjdk
+        run: pacman -Sy --noconfirm && pacman -S archlinux-keyring --noconfirm && pacman -Syu --needed --noconfirm aarch64-linux-gnu-binutils wget base-devel xmlto libxml2 libxml2-legacy inetutils bc cpio python-sphinx python-sphinx_rtd_theme graphviz imagemagick git python zip github-cli fortune-mod jre8-openjdk
       - uses: actions/checkout@v4
       - name: Add repo as a safe directory
         run: git config --global --add safe.directory $(pwd)
       - name: Checkout submodules
         run: git submodule update --init --recursive --remote
-      - name: Initialize ccache
-        uses: hendrikmuhs/ccache-action@v1.2
-        with:
-          max-size: 2048M
       - name: Build Kernel
         run: bash ci_build.sh ${{ matrix.device }}
       - name: Upload kernel package to artifacts
