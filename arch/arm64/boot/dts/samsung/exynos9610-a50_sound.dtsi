@@ -1,5 +1,5 @@
 /*
- * SAMSUNG EXYNOS9611 A50S soundcard device tree source
+ * SAMSUNG EXYNOS9610 A50 soundcard device tree source
  *
  * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *		http://www.samsung.com
@@ -30,7 +30,7 @@
 				clock-names = "xclkout";
 				clocks = <&clock OSC_AUD>;
 				pinctrl-names = "default";
-				pinctrl-0 = <&xclkout0>;
+				pinctrl-0 = <&xclkout0 &earant_det>;
 
 				samsung,routing =
 					"HEADSETMIC", "MICBIAS1",
@@ -240,7 +240,7 @@
 						sound-dai = <&abox_synchronized_ipc 0>;
 					};
 					codec {
-						sound-dai = <&rt5510_amp 0>;
+						sound-dai = <&tfa98xx 0>;
 					};
 				};
 				uaif@4 {
@@ -301,13 +301,6 @@
 };
 
 &abox {
-	/delete-node/ ext_bin@0;
-	ext_bin_0: ext_bin@0 {
-		status = "okay";
-		samsung,name = "rtdsp.bin";
-		samsung,area = <1>; /* 0:SRAM, 1:DRAM, 2:VSS */
-		samsung,offset = <0x502000>;
-	};
 	/delete-node/ ext_bin@1;
 	ext_bin_1: ext_bin@1 {
 		status = "okay";
@@ -322,13 +315,6 @@
 		samsung,area = <1>;
 		samsung,offset = <0x7EC000>;
 	};
-	/delete-node/ ext_bin@4;
-	ext_bin_4: ext_bin@4 {
-		status = "okay";
-		samsung,name = "rtdsp_param.bin";
-		samsung,area = <1>;
-		samsung,offset = <0x582000>;
-	};
 	/delete-node/ ext_bin@5;
 	ext_bin_5: ext_bin@5 {
 		status = "okay";
@@ -342,10 +328,8 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 	status = "okay";
-
-	rt5510_amp: rt5510@34 {
-		status = "okay";
-		compatible = "richtek,rt5510";
+	tfa98xx: tfa98xx@34 {
+		compatible = "nxp,tfa98xx";
 		#sound-dai-cells = <1>;
 		reg = <0x34>;
 	};
@@ -367,7 +351,6 @@
 		realtek,in3-differential;
 		realtek,in4-differential;
 		realtek,jd-src = <2>;
-		realtek,mic-check-in-bg;
 		realtek,dmic2-data-pin =<2>;
 		realtek,sar-hs-type = <700>;
 		realtek,sar-pb-vth0 = <95>;

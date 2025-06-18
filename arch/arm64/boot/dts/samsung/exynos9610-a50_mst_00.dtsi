@@ -11,23 +11,16 @@
  */
 
 / {
-	fragment@model {
-		target-path = "/";
-		__overlay__ {
-			sec-mst{
-				compatible = "sec-mst";
-				sec-mst,mst-pwr-gpio = <&gpm12 0 0>;
-				sec-mst,mst-en-gpio = <&gpm14 0 0>;
-				sec-mst,mst-data-gpio = <&gpm13 0 0>;
-				sec-mst,mst-support-gpio = <&gpg0 1 0>;
+	sec-mst{
+		compatible = "sec-mst";
+		sec-mst,mst-pwr-gpio = <&gpm12 0 0>;
+		sec-mst,mst-en-gpio = <&gpm14 0 0>;
+		sec-mst,mst-data-gpio = <&gpm13 0 0>;
 
-//				pinctrl-names = "default";
-//				pinctrl-0 = <&mst_pwr_en &mst_en &mst_data>;
-			};
-		};
+		pinctrl-names = "default";
+		pinctrl-0 = <&mst_pwr_en &mst_en &mst_data>;
 	};
-};
-/*
+
 	pinctrl@11C20000 {
 		mst_pwr_en: sec-mst,mst-pwr-gpio {
 			samsung,pins ="gpm12-0";
@@ -49,4 +42,4 @@
 			samsung,pin-pud = <1>;
 		};
 	};
-*/
+};

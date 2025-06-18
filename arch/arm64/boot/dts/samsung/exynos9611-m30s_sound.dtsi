@@ -1,5 +1,5 @@
 /*
- * SAMSUNG EXYNOS9611 A50S soundcard device tree source
+ * SAMSUNG EXYNOS9610 M30S soundcard device tree source
  *
  * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *		http://www.samsung.com
@@ -339,10 +339,10 @@
 };
 
 &hsi2c_3 {
+	/* 11d10000.hsi2c */
 	#address-cells = <1>;
 	#size-cells = <0>;
 	status = "okay";
-
 	rt5510_amp: rt5510@34 {
 		status = "okay";
 		compatible = "richtek,rt5510";
@@ -367,12 +367,11 @@
 		realtek,in3-differential;
 		realtek,in4-differential;
 		realtek,jd-src = <2>;
-		realtek,mic-check-in-bg;
 		realtek,dmic2-data-pin =<2>;
 		realtek,sar-hs-type = <700>;
-		realtek,sar-pb-vth0 = <95>;
-		realtek,sar-pb-vth1 = <139>;
-		realtek,sar-pb-vth2 = <246>;
+		realtek,sar-pb-vth0 = <100>;
+		realtek,sar-pb-vth1 = <145>;
+		realtek,sar-pb-vth2 = <250>;
 		realtek,sar-pb-vth3 = <580>;
 		imp_table = <
 			/*min max gain bias*/

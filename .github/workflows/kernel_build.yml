@@ -11,7 +11,7 @@ jobs:
       image: panchajanya1999/archlinux:latest
     strategy:
       matrix:
-        device: [a51, f41, gta4xl, gta4xlwifi, m21, m31, m31s]
+        device: [a50, a50s, a51, f41, gta4xl, gta4xlwifi, m21, m30sdd, m31, m31s, xcoverproxx]
     steps:
       - name: Setup env
         run: pacman -Sy --noconfirm && pacman -S archlinux-keyring --noconfirm && pacman -Syu --needed --noconfirm aarch64-linux-gnu-binutils wget base-devel xmlto libxml2 libxml2-legacy inetutils bc cpio python-sphinx python-sphinx_rtd_theme graphviz imagemagick git python zip github-cli fortune-mod jre8-openjdk
