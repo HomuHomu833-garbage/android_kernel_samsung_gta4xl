@@ -10,6 +10,7 @@ jobs:
     container:
       image: panchajanya1999/archlinux:latest
     strategy:
+      fail-fast: false
       matrix:
         device: [a50, a50s, a51, f41, gta4xl, gta4xlwifi, m21, m30sdd, m31, m31s, xcoverproxx]
     steps:
